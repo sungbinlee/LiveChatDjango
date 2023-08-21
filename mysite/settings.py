@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     # thrid apps
 
     # local apps
-    
+    'user',
 ]
 
 MIDDLEWARE = [
