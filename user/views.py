@@ -1,3 +1,5 @@
+# user/views.py
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,6 +24,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
 
 class LogoutUserView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -55,7 +58,7 @@ class UnfollowUserView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, user_id):
+    def delete(self, request, user_id):
         user_to_unfollow = get_object_or_404(CustomUser, pk=user_id)
         if request.user != user_to_unfollow:
             request.user.followers.remove(user_to_unfollow)
