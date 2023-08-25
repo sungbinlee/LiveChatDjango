@@ -18,8 +18,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        password = validated_data.pop('password1')
+        password1 = validated_data.pop('password1')  # 'password1'을 추출
+        password2 = validated_data.pop('password2')  # 'password2'를 추출
+        if password1 != password2:
+            raise serializers.ValidationError("Passwords do not match.")
         user = CustomUser(**validated_data)
-        user.set_password(password)
+        user.set_password(password1)
         user.save()
         return user
+
