@@ -1,21 +1,8 @@
-# user/models.py
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 
-class CustomUser(AbstractUser):
-    # ...
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        related_name='customuser_set',  # related_name 변경
-        related_query_name='user',
-    )
-
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        related_name='customuser_set',  # related_name 변경
-        related_query_name='user',
-    )
+class CustomUser(models.Model):
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100)
+    followers = models.ManyToManyField('self', blank=True, symmetrical=False)
+    # 추가 필드 정의 가능
